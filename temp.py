@@ -28,44 +28,53 @@ class Matrix:
         #check to see if input is indeed a matrix
         
     def row_swap(self, row1, row2):
-        " switches rows 1 & 2 in a matrix "
+        #Switches rows 1 & 2 in a matrix 
         
         self.matrix[row1], self.matrix[row2] = self.matrix[row2], self.matrix[row1]
         
     def row_subtract(self, row1, row2, factor):
-        "subtracts row2 multiplied by a factor from row1" 
+        #Subtracts row2 multiplied by a factor from row1 
         
         self.matrix[row1] = [self.matrix[row1][i] - self.matrix[row2][i] * factor for i in range(self.columns)]
     
     def row_divide(self, row, factor):
-        "divides all elements in a row by a given factor"
+        #Divides all elements in a row by a given factor
         self.matrix[row] = [self.matrix[row][i] / factor for i in range(self.rows)]
     
     def row_reduce(self):
-        """Row reduces input matrix"""
+        #Outputs row-reduced echelon form of the input matrix
         
         sorted_rows = 0
-        #counter for rows that have already been reduced
+        #Counter for rows that have already been reduced
         
         for y in range(self.columns):
+            #Loops once for each column
             
             x = sorted_rows
             hit = False
             
-            while hit is False and x < (self.rows): 
+            while hit is False and x < (self.rows):
+                '''With a fixed column, loops over rows until nonzero value is 
+                found or until all rows have been searched.''' 
                 
                 if x < self.rows and self.matrix[x][y] != 0:
-                
+                    '''If the element is nonzero and x is within the domain of the 
+                    rowspace, then the row is divided by the entry value to 
+                    normalize the element of focus.'''
+                    
                     self.row_divide(x, self.matrix[x][y])
                     
                     for i in range(self.rows):
                         
                         if i != x:
+                             '''Row x is subtracted from every row in the matrix
+                             except itself'''
                             
                             self.row_subtract(i, x, self.matrix[i][y])
                             
-                    
                     self.row_swap(x, sorted_rows)
+                    #The rows are then switched so that sorted rows are on top.
+                    
                     sorted_rows += 1
                     hit = True
                 
@@ -73,6 +82,8 @@ class Matrix:
                     x += 1
                 
         for j in range(self.rows):
+            #returns and prints to screen the row reduced matrix
+            
             print("\n")
             print(self.matrix[j])
-            
+            return self.matrix
