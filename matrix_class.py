@@ -87,3 +87,15 @@ class Matrix:
             print("\n")
             print(self.matrix[j])
         return self.matrix
+    
+    
+    def Transpose(self):
+        """Transposes input matrix"""
+        
+        
+        temp = [[self.matrix[row][column] for row in range(self.rows)] for \
+        column in range(self.columns)] 
+        
+        return temp
+    
+    
